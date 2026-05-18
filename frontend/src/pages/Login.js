@@ -3,7 +3,13 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import MarketingHeader from "../components/MarketingHeader";
 import API_BASE, { API_ORIGIN } from "../config";
-import { isAdminRole } from "../utils/auth";
+import {
+  isAdminRole,
+  setStoredAuth,
+  clearStoredToken,
+  authRedirectPath,
+  describeApiError,
+} from "../utils/auth";
 import "./Auth.css";
 
 function buildMaintenanceMessage(start, end) {
@@ -64,12 +70,12 @@ function Login() {
   }, [location.search]);
 
   const handleGoogleLogin = () => {
-    localStorage.removeItem("token");
+    clearStoredToken();
     window.location.href = `${API_ORIGIN}/oauth2/authorization/google`;
   };
 
   const handleGithubLogin = () => {
-    localStorage.removeItem("token");
+    clearStoredToken();
     window.location.href = `${API_ORIGIN}/oauth2/authorization/github`;
   };
 
@@ -91,6 +97,8 @@ function Login() {
     }
 
     try {
+      clearStoredToken();
+
       const response = await axios.post(
         `${API_BASE}/auth/login`,
         { email: trimmedEmail, password },
@@ -100,7 +108,7 @@ function Login() {
       const role = response.data.role;
       const admin = isAdminRole(role);
 
-      localStorage.setItem("token", token);
+      setStoredAuth(token, role);
 
       // Extra guard: during maintenance, block non-admin even after successful auth.
       if (!admin) {
@@ -110,7 +118,7 @@ function Login() {
           });
           const maintenanceMode = Boolean(settingsRes?.data?.maintenanceMode);
           if (maintenanceMode) {
-            localStorage.removeItem("token");
+            clearStoredToken();
             setNotification({
               type: "error",
               message: buildMaintenanceMessage(
@@ -128,14 +136,9 @@ function Login() {
       setNotification({ type: "success", message: "Login successful. Redirecting..." });
 
       setTimeout(() => {
-        if (admin) {
-          navigate("/AdminDashboard");
-        } else {
-          navigate("/dashboard");
-        }
+        navigate(authRedirectPath(role));
       }, 800);
     } catch (err) {
-      const msg = err.response?.data;
       const status = err.response?.status;
       const location = err.response?.headers?.location || "";
       const isBackendRedirect =
@@ -148,7 +151,7 @@ function Login() {
         type: "error",
         message: isBackendRedirect
           ? "Backend must be redeployed on Render (login API is redirecting to /login instead of returning JSON). Push the latest backend code to deployment-r6qc, then try again."
-          : msg || "Invalid email or password.",
+          : describeApiError(err, "Invalid email or password."),
       });
     }
   };

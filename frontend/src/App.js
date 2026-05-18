@@ -20,6 +20,7 @@ import Leaderboard from "./pages/Leaderboard";
 import Goals from "./pages/Goals";
 import AdminDashboard from "./pages/AdminDashboard";
 import ErrorBoundary from "./components/ErrorBoundary";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Marketplace from "./pages/Marketplace";
 import Notifications from "./pages/Notifications";
 import Transactions from "./pages/Transactions";
@@ -36,25 +37,25 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/survey" element={<LifestyleSurvey />} />
+        <Route path="/dashboard" element={<ProtectedRoute requireUser><Dashboard /></ProtectedRoute>} />
+        <Route path="/survey" element={<ProtectedRoute requireUser><LifestyleSurvey /></ProtectedRoute>} />
         <Route path="/lifestyle-survey" element={<Navigate to="/survey" replace />} />
-        <Route path="/carbon-history" element={<CarbonHistory />} />
-        <Route path="/carbon-details/:id" element={<CarbonLogDetails />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/carbon-history" element={<ProtectedRoute requireUser><CarbonHistory /></ProtectedRoute>} />
+        <Route path="/carbon-details/:id" element={<ProtectedRoute requireUser><CarbonLogDetails /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
-        <Route path="/badges" element={<Badges />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
-        <Route path="/admin" element={<ErrorBoundary><AdminDashboard /></ErrorBoundary>} />
+        <Route path="/badges" element={<ProtectedRoute requireUser><Badges /></ProtectedRoute>} />
+        <Route path="/leaderboard" element={<ProtectedRoute requireUser><Leaderboard /></ProtectedRoute>} />
+        <Route path="/admin" element={<ProtectedRoute requireAdmin><ErrorBoundary><AdminDashboard /></ErrorBoundary></ProtectedRoute>} />
         <Route path="/admindashboard" element={<Navigate to="/AdminDashboard" replace />} />
         <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
-        <Route path="/goals" element={<Goals />} />
-        <Route path="/Goals" element={<Goals />} />
-        <Route path="/AdminDashboard" element={<ErrorBoundary><AdminDashboard /></ErrorBoundary>} />
-        <Route path="/marketplace" element={<Marketplace />} />
-        <Route path="/transactions" element={<Transactions />} />
-        <Route path="/notifications" element={<Notifications />} />
+        <Route path="/goals" element={<ProtectedRoute requireUser><Goals /></ProtectedRoute>} />
+        <Route path="/Goals" element={<ProtectedRoute requireUser><Goals /></ProtectedRoute>} />
+        <Route path="/AdminDashboard" element={<ProtectedRoute requireAdmin><ErrorBoundary><AdminDashboard /></ErrorBoundary></ProtectedRoute>} />
+        <Route path="/marketplace" element={<ProtectedRoute requireUser><Marketplace /></ProtectedRoute>} />
+        <Route path="/transactions" element={<ProtectedRoute requireUser><Transactions /></ProtectedRoute>} />
+        <Route path="/notifications" element={<ProtectedRoute requireUser><Notifications /></ProtectedRoute>} />
       </Routes>
     </Router>
   );

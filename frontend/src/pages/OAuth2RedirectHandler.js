@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import API_BASE from "../config";
-import { isAdminRole } from "../utils/auth";
+import { setStoredAuth, authRedirectPath } from "../utils/auth";
 import "./Auth.css";
 
 function OAuth2RedirectHandler() {
@@ -30,13 +30,15 @@ function OAuth2RedirectHandler() {
     }
 
     if (token) {
-      localStorage.setItem("token", token);
+      setStoredAuth(token, null);
       const headers = { Authorization: `Bearer ${token}` };
       const t = setTimeout(() => {
         axios
           .get(`${API_BASE}/auth/me`, { headers })
           .then((res) => {
-            navigate(isAdminRole(res.data?.role) ? "/AdminDashboard" : "/dashboard");
+            const role = res.data?.role;
+            setStoredAuth(token, role);
+            navigate(authRedirectPath(role));
           })
           .catch(() => navigate("/dashboard"));
       }, 1000);

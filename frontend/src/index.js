@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom/client';
 import axios from 'axios';
 import './index.css';
 import App from './App';
+import { shouldAttachAuthHeader } from './utils/auth';
 
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
-  if (token && !config.headers?.Authorization) {
+  const url = config.url || '';
+  if (token && !config.headers?.Authorization && shouldAttachAuthHeader(url)) {
     config.headers = config.headers || {};
     config.headers.Authorization = `Bearer ${token}`;
   }

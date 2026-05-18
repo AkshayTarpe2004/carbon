@@ -6,6 +6,8 @@ import {
   isAdminRole as checkAdminRole,
   emailFromToken,
   displayNameFromEmail,
+  getStoredRole,
+  clearStoredToken,
 } from "../utils/auth";
 import "./AppLayout.css";
 
@@ -14,7 +16,7 @@ function AppLayout({ children }) {
   const location = useLocation();
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef(null);
-  const [user, setUser] = useState({ name: "", role: "USER", avatar: null });
+  const [user, setUser] = useState({ name: "", role: getStoredRole() || "USER", avatar: null });
   const currentAdminTab = new URLSearchParams(location.search).get("tab") || "analytics";
   const roleKey = (user.role || "USER").trim().toUpperCase();
   const isAdmin = checkAdminRole(user.role);
@@ -30,11 +32,13 @@ function AppLayout({ children }) {
       const name =
         (data.name && String(data.name).trim()) ||
         (email ? displayNameFromEmail(email) : "User");
+      const role = (data.role || "USER").trim().toUpperCase();
       setUser({
         name,
-        role: (data.role || "USER").trim().toUpperCase(),
+        role,
         avatar: data.avatar || null,
       });
+      localStorage.setItem("role", role);
     };
 
     axios
@@ -80,7 +84,7 @@ function AppLayout({ children }) {
         /* still sign out locally */
       }
     }
-    localStorage.removeItem("token");
+    clearStoredToken();
     navigate("/");
   };
 

@@ -56,7 +56,7 @@ public class CorsPreflightFilter extends OncePerRequestFilter {
         } else {
             response.setHeader(
                     HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS,
-                    "Authorization, Content-Type, Accept, Origin, X-Requested-With");
+                    "Authorization, Content-Type, Accept, Origin, X-Requested-With, X-Public-IP");
         }
         response.setHeader(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "3600");
     }

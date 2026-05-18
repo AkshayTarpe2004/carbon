@@ -5,13 +5,26 @@ export function isUnauthorizedResponse(error) {
   return error?.response?.status === 401;
 }
 
-/** Keep axios default Authorization in sync with localStorage (reliable across all requests). */
-export function syncAxiosAuth(token) {
-  if (token) {
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+/**
+ * Do NOT set axios.defaults.headers.common.Authorization — that leaks stale JWTs
+ * onto public routes (login, oauth-enabled). The api client interceptor attaches
+ * the token per protected request from localStorage instead.
+ */
+export function syncAxiosAuth(_token) {
+  delete axios.defaults.headers.common.Authorization;
+}
+
+/** Remove Authorization from a single request (public auth endpoints). */
+export function stripAuthHeader(config) {
+  if (!config.headers) return config;
+  if (typeof config.headers.set === "function") {
+    config.headers.delete("Authorization");
+    config.headers.delete("authorization");
   } else {
-    delete axios.defaults.headers.common.Authorization;
+    delete config.headers.Authorization;
+    delete config.headers.authorization;
   }
+  return config;
 }
 
 /** Attach Bearer token to a single axios request config. */

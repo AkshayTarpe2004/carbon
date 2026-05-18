@@ -8,6 +8,7 @@ import {
   attachAuthHeader,
   getStoredToken,
   shouldAttachAuthHeader,
+  stripAuthHeader,
   syncAxiosAuth,
 } from "../utils/auth";
 
@@ -25,21 +26,29 @@ function readValidToken() {
   return token;
 }
 
-/** Attach JWT from localStorage on every protected request (overwrites bad headers). */
+/** Per-request auth: strip JWT on public routes; attach fresh token on protected routes. */
 function applyAuthInterceptor(instance) {
   instance.interceptors.request.use((config) => {
     const url = resolveRequestUrl(config);
-    if (!shouldAttachAuthHeader(url)) return config;
+
+    if (!shouldAttachAuthHeader(url)) {
+      stripAuthHeader(config);
+      return config;
+    }
+
     const token = readValidToken();
-    if (!token) return config;
+    if (!token) {
+      stripAuthHeader(config);
+      return config;
+    }
+
     attachAuthHeader(config, token);
     return config;
   });
 }
 
 export function bootstrapAuthFromStorage() {
-  const token = readValidToken();
-  if (token) syncAxiosAuth(token);
+  syncAxiosAuth(null);
 }
 
 export function configureHttpAuth() {

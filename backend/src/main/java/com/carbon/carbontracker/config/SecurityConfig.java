@@ -68,8 +68,8 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+        // No JwtFilter here — stale/invalid Bearer tokens must not break login or oauth-enabled.
         return http.build();
     }
 

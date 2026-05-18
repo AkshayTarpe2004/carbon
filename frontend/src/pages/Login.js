@@ -10,6 +10,7 @@ import {
   authRedirectPath,
   describeApiError,
   normalizeAuthToken,
+  syncAxiosAuth,
 } from "../utils/auth";
 import "./Auth.css";
 
@@ -38,14 +39,13 @@ function Login() {
     notification.message.toLowerCase().includes("maintenance mode");
 
   useEffect(() => {
+    syncAxiosAuth(null);
     axios
       .get(`${API_BASE}/auth/oauth-enabled`)
       .then((res) => {
         setOauthEnabled(res.data);
       })
       .catch(() => {
-        // If the feature flag endpoint is missing or fails,
-        // fall back to showing the social buttons.
         setOauthEnabled({ google: true, github: true });
       });
   }, []);
@@ -98,6 +98,7 @@ function Login() {
     }
 
     try {
+      clearStoredToken();
       const response = await axios.post(
         `${API_BASE}/auth/login`,
         { email: trimmedEmail, password },

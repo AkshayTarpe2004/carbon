@@ -1,0 +1,93 @@
+/* Shared with Landing — keep class names in sync */
+
+.landing-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(243, 246, 243, 0.88);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--color-border);
+  width: 100%;
+}
+
+.landing-header-inner {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 14px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.landing-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.03em;
+}
+
+.landing-logo-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.landing-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px 16px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.landing-nav-link {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-sidebar-text);
+  text-decoration: none;
+  padding: 8px 4px;
+  transition: color 0.2s;
+}
+
+.landing-nav-link:hover {
+  color: var(--color-primary);
+}
+
+.landing-nav-link--current {
+  color: var(--color-primary);
+  font-weight: 600;
+  cursor: default;
+}
+
+.landing-nav-cta {
+  padding: 8px 16px;
+  font-size: 13px;
+}
+
+.landing-nav-cta--current {
+  cursor: default;
+  pointer-events: none;
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .landing-header-inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .landing-nav {
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .landing-nav-cta {
+    width: 100%;
+    justify-content: center;
+  }
+}

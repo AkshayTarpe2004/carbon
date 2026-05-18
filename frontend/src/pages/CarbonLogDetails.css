@@ -1,0 +1,356 @@
+.carbon-details-page {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.carbon-details-header {
+  margin-bottom: 24px;
+}
+
+.carbon-details-title {
+  margin: 0 0 6px 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.03em;
+  padding-bottom: 8px;
+  border-bottom: 3px solid var(--color-primary);
+  display: inline-block;
+}
+
+.carbon-details-subtitle {
+  margin: 8px 0 12px 0;
+  font-size: 15px;
+  color: var(--color-text-muted);
+}
+
+.carbon-details-back {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: none;
+  margin-top: 8px;
+}
+
+.carbon-details-back:hover {
+  text-decoration: underline;
+}
+
+.carbon-details-loading {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 15px;
+  margin: 24px 0;
+}
+
+.carbon-details-error-card {
+  padding: 32px;
+  text-align: center;
+}
+
+.carbon-details-error-title {
+  margin: 0 0 12px 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.carbon-details-error-text {
+  margin: 0 0 12px 0;
+  font-size: 15px;
+  color: var(--color-accent-red);
+}
+
+.carbon-details-error-hint {
+  margin: 0 0 20px 0;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.carbon-details-error-card .carbon-details-btn-primary {
+  display: inline-block;
+}
+
+.carbon-details-form.card {
+  padding: 24px;
+}
+
+.carbon-details-form-error {
+  margin: 0 0 16px 0;
+  padding: 10px 12px;
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--color-accent-red);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+}
+
+.carbon-details-field {
+  margin-bottom: 20px;
+}
+
+.carbon-details-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+
+.carbon-details-input {
+  width: 100%;
+  max-width: 320px;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background: var(--color-surface);
+  box-sizing: border-box;
+}
+
+.carbon-details-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.carbon-details-input-readonly {
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  cursor: default;
+}
+
+.carbon-details-hint {
+  display: block;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+.carbon-details-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+.carbon-details-btn {
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.carbon-details-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.carbon-details-btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.carbon-details-btn-primary:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+.carbon-details-btn-secondary {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.carbon-details-btn-secondary:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* —— Edit Carbon Log (uses LifestyleSurvey.css + .carbon-log-edit) —— */
+
+.carbon-log-edit .survey-desc {
+  max-width: none;
+}
+
+.carbon-log-intro {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin: 0 0 20px 0;
+  padding: 14px 16px;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.carbon-log-intro-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.carbon-log-intro-title {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+
+.carbon-log-intro-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+.carbon-log-edit .survey-edit-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.carbon-log-edit .survey-edit-output {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+.carbon-log-edit .survey-label-output {
+  margin-top: 0;
+  padding: 8px 10px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  gap: 4px;
+}
+
+.carbon-log-edit .survey-label-output .survey-output-badge {
+  margin-bottom: 0;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.carbon-log-edit .survey-output-title {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 0;
+  line-height: 1.3;
+}
+
+/* One line: number + unit together inside the bordered pill (no wide gap) */
+.carbon-log-edit .survey-label-output .survey-input-wrap {
+  margin-top: 4px;
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  align-self: flex-start;
+  gap: 6px;
+  width: auto;
+  max-width: 100%;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.carbon-log-edit .survey-label-output .survey-input-wrap .survey-input {
+  flex: 0 1 auto;
+  width: auto;
+  min-width: 0;
+  max-width: 10rem;
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-text);
+  background: transparent;
+  font-variant-numeric: tabular-nums;
+  appearance: textfield;
+}
+
+.carbon-log-edit .survey-label-output .survey-input-wrap .survey-input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.carbon-log-edit .survey-label-output .survey-unit {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.carbon-log-total-section {
+  background: var(--color-bg);
+}
+
+.carbon-log-total-fields {
+  gap: 0;
+  align-items: flex-start;
+}
+
+/*
+ * Grand total: same compact “Live estimate” card as the three columns — not a full-width box.
+ * The whole label (border + background) is capped to ~column width.
+ */
+.carbon-log-edit .survey-label-output--grand {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: min(100%, 20rem);
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border-left-width: 3px;
+}
+
+.carbon-log-edit .survey-label-output--grand .survey-input-wrap {
+  border-color: rgba(21, 128, 61, 0.35);
+}
+
+.carbon-log-edit .survey-hint.carbon-log-total-hint {
+  margin-top: 8px;
+  display: block;
+  line-height: 1.45;
+  font-size: 12px;
+}
+
+@media (max-width: 600px) {
+  .carbon-log-intro {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

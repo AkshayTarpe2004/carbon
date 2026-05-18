@@ -1,0 +1,557 @@
+.survey-page {
+  max-width: min(1440px, 100%);
+  margin: 0 auto;
+  padding: 0 12px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.survey-breadcrumb {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+}
+
+.survey-title {
+  margin: 0 0 10px 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.03em;
+  padding-bottom: 12px;
+  border-bottom: 3px solid var(--color-primary);
+  display: inline-block;
+}
+
+.survey-desc {
+  margin: 0 0 16px 0;
+  font-size: 15px;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+  max-width: 52rem;
+}
+
+.survey-intro {
+  margin: 0 0 18px 0;
+  padding: 14px 16px;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.survey-intro-title {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+
+.survey-intro-text {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.survey-label-text {
+  display: block;
+  line-height: 1.35;
+}
+
+.survey-required {
+  color: var(--color-accent-red);
+  font-weight: 700;
+}
+
+.survey-unit-inline {
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.survey-units-note {
+  margin: 0 0 28px 0;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  padding: 8px 12px;
+  background: var(--color-bg);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--color-primary);
+}
+
+/* overflow visible so sticky footer works inside scrollable .app-content */
+.survey-form.card {
+  padding: 0;
+  overflow: visible;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+}
+
+/* Three-column row on wide screens: Transport | Food | Energy */
+.survey-sections-cols {
+  display: block;
+}
+
+.survey-section {
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.survey-section:last-of-type {
+  border-bottom: none;
+}
+
+.survey-section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.survey-section-transport {
+  background: #ecfdf3;
+  border-left: 4px solid var(--color-primary);
+}
+
+.survey-section-food {
+  background: #fefce8;
+  border-left: 4px solid var(--color-accent-amber);
+}
+
+.survey-section-energy {
+  background: #eff6ff;
+  border-left: 4px solid #0ea5e9;
+}
+
+.survey-section-icon {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.survey-section-title {
+  margin: 0 0 4px 0;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.survey-section-desc {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.survey-section-question {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.survey-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.survey-label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.survey-label-optional {
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+/* Read-only calculated emissions (e.g. Edit Carbon Log) */
+.survey-label-output {
+  padding: 12px;
+  margin-top: 2px;
+  background: rgba(15, 34, 23, 0.04);
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--color-border);
+  gap: 6px;
+}
+
+.survey-label-output .survey-output-badge {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.survey-section-total {
+  padding: 18px 22px 20px;
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+}
+
+.survey-section-total .survey-section-header {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-primary);
+}
+
+.survey-input,
+.survey-select {
+  padding: 12px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.survey-input:focus,
+.survey-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.survey-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.survey-input-wrap {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  overflow: hidden;
+}
+
+.survey-input-wrap .survey-input {
+  border: none;
+  flex: 1;
+}
+
+.survey-unit {
+  padding: 0 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.survey-hint {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+  margin-top: 2px;
+}
+
+.survey-tip {
+  margin: 4px 0 0;
+  padding: 12px 12px 12px 14px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--color-text-muted);
+  background: rgba(14, 165, 233, 0.08);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid #0ea5e9;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.survey-tip-icon {
+  flex-shrink: 0;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.survey-error {
+  font-size: 12px;
+  color: var(--color-accent-red);
+  margin-top: 4px;
+}
+
+.survey-error-block {
+  margin: 0 28px 16px;
+  padding: 12px 16px;
+  background: #fef2f2;
+  border-radius: var(--radius-md);
+}
+
+.survey-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: survey-spin 0.7s linear infinite;
+}
+
+@keyframes survey-spin {
+  to { transform: rotate(360deg); }
+}
+
+.survey-success {
+  text-align: center;
+  padding: 48px 32px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.survey-success-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-accent-green);
+  color: #fff;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.survey-success-title {
+  margin: 0 0 8px 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.survey-success-text {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.survey-toggle-wrap {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.survey-toggle-copy {
+  flex: 1 1 140px;
+  min-width: 0;
+}
+
+.survey-toggle-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.survey-toggle-state {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  min-width: 2rem;
+  text-align: right;
+}
+
+.survey-toggle-state.is-on {
+  color: var(--color-primary);
+}
+
+.survey-toggle-label {
+  display: block;
+  font-weight: 600;
+}
+
+.survey-toggle-desc {
+  display: block;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.survey-toggle {
+  width: 48px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--color-border);
+  border: none;
+  cursor: pointer;
+  padding: 3px;
+  transition: background 0.2s;
+}
+
+.survey-toggle.on {
+  background: var(--color-primary);
+}
+
+.survey-success-icon {
+  background: var(--color-accent) !important;
+}
+
+.survey-toggle-thumb {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s;
+}
+
+.survey-toggle.on .survey-toggle-thumb {
+  transform: translateX(22px);
+}
+
+.survey-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px 16px;
+  padding: 16px 20px;
+  padding-bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+  position: sticky;
+  bottom: 0;
+  z-index: 4;
+  box-shadow: 0 -6px 16px rgba(15, 23, 42, 0.06);
+}
+
+.survey-actions-hint {
+  flex: 1 1 100%;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 640px) {
+  .survey-actions {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  .survey-actions-hint {
+    flex: 1 1 auto;
+    max-width: 28rem;
+    padding-right: 12px;
+  }
+}
+
+.survey-actions-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+@media (max-width: 639px) {
+  .survey-actions-buttons {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+.survey-actions .btn {
+  flex: 0 0 auto;
+  width: auto;
+  max-width: 100%;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  gap: 6px;
+}
+
+.survey-actions .btn-submit {
+  white-space: nowrap;
+}
+
+.survey-actions a.btn[aria-disabled="true"] {
+  opacity: 0.65;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.survey-actions .btn-primary:hover {
+  box-shadow: 0 2px 10px rgba(15, 118, 110, 0.3);
+}
+
+.btn-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.survey-actions .survey-spinner {
+  width: 14px;
+  height: 14px;
+  border-width: 2px;
+}
+
+@media (min-width: 1024px) {
+  .survey-sections-cols {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+  }
+
+  .survey-sections-cols .survey-section {
+    display: flex;
+    flex-direction: column;
+    border-bottom: none;
+    border-right: 1px solid var(--color-border);
+    padding: 18px 14px 20px;
+    min-height: 0;
+  }
+
+  .survey-sections-cols .survey-section:last-child {
+    border-right: none;
+  }
+
+  .survey-sections-cols .survey-fields {
+    gap: 14px;
+  }
+
+  .survey-sections-cols .survey-section-header {
+    margin-bottom: 12px;
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .survey-page {
+    padding: 0 14px;
+  }
+
+  .survey-section {
+    padding: 20px 16px;
+  }
+
+  .survey-section-total {
+    padding: 16px 16px 18px;
+  }
+
+  .survey-actions {
+    padding: 20px 16px;
+    flex-wrap: wrap;
+  }
+}

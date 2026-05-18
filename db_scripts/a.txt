@@ -1,0 +1,5 @@
+psql -U postgres
+CREATE DATABASE carbon_tracker;
+\q
+psql -U postgres -d carbon_tracker -f db_scripts/schema.sql
+psql -U postgres -d carbon_tracker -f db_scripts/seed_demo_25_users_full.sql

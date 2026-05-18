@@ -1,0 +1,713 @@
+.dashboard-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Carbon Summary Card – total emission + time filter (Daily / Weekly / Monthly) */
+
+.dashboard-summary-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 12px;
+}
+
+.dashboard-summary-value-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dashboard-summary-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: -0.02em;
+}
+
+.dashboard-summary-label {
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.dashboard-summary-filter-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.dashboard-time-filters {
+  display: flex;
+  gap: 8px;
+}
+
+.dashboard-time-btn {
+  padding: 8px 16px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dashboard-time-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.dashboard-time-btn.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+/* Category-wise breakdown */
+.dashboard-category-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.dashboard-category-card {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-left: 4px solid var(--color-primary);
+}
+
+.dashboard-category-label {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.dashboard-category-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* Emission Trend – line chart (X: Date, Y: Emission) */
+.dashboard-line-chart {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr auto;
+  gap: 8px 16px;
+  margin-top: 16px;
+  min-height: 180px;
+}
+
+.line-chart-y-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.line-chart-area {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.line-chart-svg {
+  width: 100%;
+  height: 100%;
+  min-height: 120px;
+}
+
+.line-chart-area-path {
+  vector-effect: non-scaling-stroke;
+}
+
+.line-chart-line {
+  vector-effect: non-scaling-stroke;
+}
+
+.line-chart-x-axis {
+  grid-column: 2;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+/* Recent Carbon Logs Table – Date, Total emission, View details */
+.dashboard-logs-section {
+  padding: 24px;
+}
+
+.dashboard-logs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.dashboard-logs-table-wrap {
+  overflow-x: auto;
+}
+
+.dashboard-logs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.dashboard-logs-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.dashboard-logs-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.dashboard-logs-table tbody tr:hover {
+  background: var(--color-bg);
+}
+
+.dashboard-logs-total {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.dashboard-logs-action {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.dashboard-logs-action:hover {
+  text-decoration: underline;
+}
+
+.dashboard-hero {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 24px;
+  align-items: start;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.dashboard-hero-text {
+  min-width: 0;
+}
+
+.dashboard-title {
+  margin: 0 0 6px 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+}
+
+.dashboard-subtitle {
+  margin: 0;
+  font-size: 15px;
+  color: var(--color-text-muted);
+}
+
+.dashboard-hero-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 24px 28px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border);
+}
+
+.dashboard-footprint-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+
+.dashboard-footprint-value-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dashboard-footprint-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: -0.02em;
+}
+
+.dashboard-footprint-icon {
+  font-size: 24px;
+}
+
+.dashboard-footprint-change {
+  display: block;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+.dashboard-footprint-change-up {
+  color: var(--color-accent-red);
+}
+
+.dashboard-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border);
+}
+
+.dashboard-summary-card {
+  padding: 24px;
+  border-left: 4px solid var(--color-accent);
+}
+
+.dashboard-goal-card {
+  margin-bottom: 28px;
+}
+
+.dashboard-goal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.dashboard-goal-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.dashboard-goal-badge {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.dashboard-goal-desc {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.dashboard-goal-bar-wrap {
+  height: 10px;
+  background: var(--color-border);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.dashboard-goal-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent-green));
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.dashboard-goal-tip {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.dashboard-section {
+  margin-bottom: 28px;
+}
+
+.section-heading {
+  margin: 0 0 4px 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+}
+
+.section-sub {
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.category-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.category-card {
+  padding: 20px;
+}
+
+.category-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.category-card-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.category-card-trend {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.category-card-trend.up {
+  color: var(--color-accent-red);
+}
+
+.category-card-trend.down {
+  color: var(--color-accent-green);
+}
+
+.category-card-label {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.category-bars {
+  display: flex;
+  gap: 4px;
+  align-items: flex-end;
+  height: 20px;
+}
+
+.category-bar {
+  flex: 1;
+  min-width: 4px;
+  height: 8px;
+  background: var(--color-border);
+  border-radius: 2px;
+  transition: height 0.2s, background 0.2s;
+}
+
+.category-bar.filled {
+  height: 16px;
+  background: var(--color-accent-red);
+}
+
+.category-card:nth-child(2) .category-bar.filled {
+  background: var(--color-accent-green);
+}
+
+.dashboard-trend-section {
+  padding: 24px;
+}
+
+.dashboard-graphs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 16px;
+}
+
+.dashboard-graph-card {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+}
+
+.dashboard-graph-card-wide {
+  grid-column: 1 / -1;
+}
+
+.dashboard-graph-title {
+  margin: 0 0 14px 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.dashboard-empty-chart {
+  margin-top: 16px;
+  padding: 40px 24px;
+  text-align: center;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+}
+
+.dashboard-trend-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.dashboard-trend-range {
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-family: var(--font-sans);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.dashboard-trend-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.trend-chart-area {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 160px;
+  padding: 0 8px;
+}
+
+.trend-chart-bar {
+  flex: 1;
+  min-width: 24px;
+  background: linear-gradient(180deg, var(--color-accent-green), var(--color-primary));
+  border-radius: 6px 6px 0 0;
+  opacity: 0.9;
+  transition: height 0.3s ease;
+}
+
+.trend-chart-labels {
+  display: flex;
+  justify-content: space-around;
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.badges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.badge-card {
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.badge-card:hover {
+  transform: translateY(-2px);
+}
+
+.badge-icon {
+  font-size: 32px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.badge-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.badge-blue { background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); }
+.badge-amber { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); }
+.badge-green { background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); }
+.badge-purple { background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%); }
+
+.badges-message {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.dashboard-activity-section {
+  padding: 24px;
+}
+
+.dashboard-activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.dashboard-activity-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.dashboard-activity-link:hover {
+  text-decoration: underline;
+}
+
+.activity-table-wrap {
+  overflow-x: auto;
+}
+
+.activity-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.activity-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.activity-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.activity-table tbody tr:hover {
+  background: var(--color-bg);
+}
+
+.activity-cat {
+  font-size: 18px;
+}
+
+.activity-emission {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+@media (max-width: 900px) {
+  .dashboard-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-actions {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-title {
+    font-size: 22px;
+  }
+
+  .dashboard-summary-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .dashboard-time-filters {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .dashboard-summary-card,
+  .dashboard-goal-card,
+  .card {
+    padding: 18px 16px;
+  }
+
+  .dashboard-logs-section,
+  .dashboard-trend-section,
+  .dashboard-activity-section {
+    padding: 16px;
+  }
+
+  .dashboard-logs-table th,
+  .dashboard-logs-table td,
+  .activity-table th,
+  .activity-table td {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .dashboard-line-chart {
+    gap: 6px 10px;
+    min-height: 160px;
+  }
+
+  .dashboard-graphs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-graph-card-wide {
+    grid-column: auto;
+  }
+
+  .line-chart-x-axis {
+    font-size: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4px 8px;
+    row-gap: 6px;
+  }
+
+  .trend-chart-area {
+    height: 140px;
+    gap: 4px;
+    padding: 0 4px;
+  }
+
+  .trend-chart-bar {
+    min-width: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-time-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .dashboard-summary-value {
+    font-size: 24px;
+  }
+
+  .category-cards {
+    grid-template-columns: 1fr;
+  }
+}

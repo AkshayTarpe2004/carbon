@@ -97,8 +97,6 @@ function Login() {
     }
 
     try {
-      clearStoredToken();
-
       const response = await axios.post(
         `${API_BASE}/auth/login`,
         { email: trimmedEmail, password },

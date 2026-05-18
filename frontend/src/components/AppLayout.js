@@ -25,14 +25,13 @@ function AppLayout({ children }) {
     const token = localStorage.getItem("token");
     if (!token) return;
 
-    const headers = { Authorization: `Bearer ${token}` };
     const applyProfile = (data) => {
       if (!data) return;
       const email = data.email || emailFromToken(token);
       const name =
         (data.name && String(data.name).trim()) ||
         (email ? displayNameFromEmail(email) : "User");
-      const role = (data.role || "USER").trim().toUpperCase();
+      const role = (data.role || getStoredRole() || "USER").trim().toUpperCase();
       setUser({
         name,
         role,
@@ -42,17 +41,17 @@ function AppLayout({ children }) {
     };
 
     axios
-      .get(`${API_BASE}/auth/me`, { headers })
+      .get(`${API_BASE}/auth/me`)
       .then((res) => applyProfile(res.data))
       .catch(() =>
         axios
-          .get(`${API_BASE}/users/me`, { headers })
+          .get(`${API_BASE}/users/me`)
           .then((res) => applyProfile(res.data))
           .catch(() => {
             const email = emailFromToken(token);
             setUser({
               name: email ? displayNameFromEmail(email) : "User",
-              role: "USER",
+              role: getStoredRole() || "USER",
               avatar: null,
             });
           })

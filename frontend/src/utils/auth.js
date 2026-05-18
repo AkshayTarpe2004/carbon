@@ -1,7 +1,44 @@
-/** True when the API rejected credentials (not network/CORS/500). */
+/** True when the session/token was rejected (401 only — not 403 forbidden). */
 export function isUnauthorizedResponse(error) {
-  const status = error?.response?.status;
-  return status === 401 || status === 403;
+  return error?.response?.status === 401;
+}
+
+/** Attach Bearer token to axios config (works with AxiosHeaders and plain objects). */
+export function attachAuthHeader(config, token) {
+  if (!token) return config;
+  const value = `Bearer ${token}`;
+  if (!config.headers) {
+    config.headers = { Authorization: value };
+    return config;
+  }
+  if (typeof config.headers.set === "function") {
+    config.headers.set("Authorization", value);
+  } else {
+    config.headers.Authorization = value;
+  }
+  return config;
+}
+
+/** Client-side expiry check — avoids sending dead tokens that trigger logout cascades. */
+export function isTokenExpired(token) {
+  if (!token || typeof token !== "string") return true;
+  try {
+    const base64 = token.split(".")[1];
+    if (!base64) return true;
+    const json = JSON.parse(
+      atob(base64.replace(/-/g, "+").replace(/_/g, "/"))
+    );
+    const exp = json?.exp;
+    if (typeof exp !== "number") return false;
+    return exp * 1000 <= Date.now();
+  } catch {
+    return false;
+  }
+}
+
+export function hasValidSession() {
+  const token = getStoredToken();
+  return Boolean(token) && !isTokenExpired(token);
 }
 
 export function isAdminRole(role) {

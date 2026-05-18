@@ -1,17 +1,18 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import {
-  getStoredToken,
+  hasValidSession,
   getStoredRole,
   isAdminRole,
   authRedirectPath,
+  clearStoredToken,
 } from "../utils/auth";
 
 function ProtectedRoute({ children, requireAdmin = false, requireUser = false }) {
   const location = useLocation();
-  const token = getStoredToken();
 
-  if (!token) {
+  if (!hasValidSession()) {
+    clearStoredToken();
     return <Navigate to="/login" replace state={{ from: location.pathname }} />;
   }
 

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AppLayout from "../components/AppLayout";
 import API_BASE from "../config";
-import { getStoredToken, isUnauthorizedResponse, clearStoredToken } from "../utils/auth";
+import { getStoredToken } from "../utils/auth";
 import "./LifestyleSurvey.css";
 
 const TRANSPORT_OPTIONS = [
@@ -45,24 +45,9 @@ function LifestyleSurvey() {
   const showFuelType = form.primaryMode === "car";
 
   useEffect(() => {
-    const token = getStoredToken();
-    if (!token) {
+    if (!getStoredToken()) {
       navigate("/login");
-      return;
     }
-    const check = async () => {
-      try {
-        await axios.get(`${API_BASE}/auth/me`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-      } catch (err) {
-        if (isUnauthorizedResponse(err)) {
-          clearStoredToken();
-          navigate("/login");
-        }
-      }
-    };
-    check();
   }, [navigate]);
 
   useEffect(() => {

@@ -225,9 +225,18 @@ public ResponseEntity<?> login(@RequestBody RegisterRequest request, HttpServlet
     }
 
 @GetMapping("/me")
-public ResponseEntity<?> getProfile(@RequestHeader("Authorization") String authHeader) {
+public ResponseEntity<?> getProfile(
+        @RequestHeader(value = "Authorization", required = false) String authHeader) {
 
-    String token = authHeader.replace("Bearer ", "");
+    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+        return ResponseEntity.status(401).body(Map.of("error", "Unauthorized"));
+    }
+
+    String token = authHeader.substring(7).trim();
+    if (token.isEmpty() || !jwtUtil.validateToken(token)) {
+        return ResponseEntity.status(401).body(Map.of("error", "Invalid or expired token"));
+    }
+
     String email = jwtUtil.extractEmail(token);
 
     Optional<?> userOpt = userService.getUserByEmail(email);

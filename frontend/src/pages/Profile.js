@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AppLayout from "../components/AppLayout";
 import API_BASE from "../config";
-import { getStoredToken, isUnauthorizedResponse, clearStoredToken } from "../utils/auth";
+import { getStoredToken } from "../utils/auth";
 import "./Profile.css";
 
 function isValidPassword(pwd) {
@@ -38,12 +38,7 @@ function Profile() {
           setName(res.data.name ?? "");
           setEmail(res.data.email ?? "");
         }
-      } catch (err) {
-        if (isUnauthorizedResponse(err)) {
-          clearStoredToken();
-          navigate("/login");
-          return;
-        }
+      } catch {
         setName("");
         setEmail("");
       } finally {

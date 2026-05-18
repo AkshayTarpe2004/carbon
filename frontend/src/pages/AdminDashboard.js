@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import AppLayout from "../components/AppLayout";
 import API_BASE, { API_ORIGIN } from "../config";
-import { isAdminRole, isUnauthorizedResponse, clearStoredToken } from "../utils/auth";
+import { isAdminRole } from "../utils/auth";
 import "./AdminDashboard.css";
 import "./Notifications.css";
 
@@ -1144,11 +1144,6 @@ function AdminDashboard() {
         });
       })
       .catch((err) => {
-        if (isUnauthorizedResponse(err)) {
-          clearStoredToken();
-          navigate("/login");
-          return;
-        }
         const detail =
           typeof err?.response?.data === "string"
             ? err.response.data

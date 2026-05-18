@@ -3,14 +3,20 @@ import ReactDOM from 'react-dom/client';
 import axios from 'axios';
 import './index.css';
 import App from './App';
-import { shouldAttachAuthHeader } from './utils/auth';
+import { attachAuthHeader, getStoredToken, shouldAttachAuthHeader } from './utils/auth';
 
 axios.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  const url = config.url || '';
-  if (token && !config.headers?.Authorization && shouldAttachAuthHeader(url)) {
-    config.headers = config.headers || {};
-    config.headers.Authorization = `Bearer ${token}`;
+  const token = getStoredToken();
+  const url = `${config.baseURL || ''}${config.url || ''}`;
+  if (!token || !shouldAttachAuthHeader(url)) {
+    return config;
+  }
+  const existing =
+    config.headers?.Authorization ||
+    config.headers?.authorization ||
+    (typeof config.headers?.get === 'function' ? config.headers.get('Authorization') : null);
+  if (!existing) {
+    attachAuthHeader(config, token);
   }
   return config;
 });

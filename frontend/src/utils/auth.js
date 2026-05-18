@@ -1,9 +1,20 @@
+import axios from "axios";
+
 /** True when the session/token was rejected (401 only — not 403 forbidden). */
 export function isUnauthorizedResponse(error) {
   return error?.response?.status === 401;
 }
 
-/** Attach Bearer token to axios config (works with AxiosHeaders and plain objects). */
+/** Keep axios default Authorization in sync with localStorage (reliable across all requests). */
+export function syncAxiosAuth(token) {
+  if (token) {
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  } else {
+    delete axios.defaults.headers.common.Authorization;
+  }
+}
+
+/** Attach Bearer token to a single axios request config. */
 export function attachAuthHeader(config, token) {
   if (!token) return config;
   const value = `Bearer ${token}`;
@@ -57,6 +68,7 @@ export function getStoredRole() {
 export function setStoredAuth(token, role) {
   if (token) {
     localStorage.setItem("token", token);
+    syncAxiosAuth(token);
   }
   if (role != null && String(role).trim()) {
     localStorage.setItem("role", String(role).trim().toUpperCase());
@@ -66,6 +78,7 @@ export function setStoredAuth(token, role) {
 export function clearStoredToken() {
   localStorage.removeItem("token");
   localStorage.removeItem("role");
+  syncAxiosAuth(null);
 }
 
 /** Do not attach JWT to public auth endpoints (avoids CORS preflight on login/register). */
@@ -84,9 +97,9 @@ export function shouldAttachAuthHeader(url) {
   return !publicAuthPaths.some((p) => path.includes(p));
 }
 
-export function authHeaders() {
-  const token = getStoredToken();
-  return token ? { Authorization: `Bearer ${token}` } : {};
+export function authHeaders(token) {
+  const t = token || getStoredToken();
+  return t ? { Authorization: `Bearer ${t}` } : {};
 }
 
 export function authRedirectPath(role) {

@@ -237,12 +237,17 @@ public ResponseEntity<?> getProfile(
         return ResponseEntity.status(401).body(Map.of("error", "Invalid or expired token"));
     }
 
-    String email = jwtUtil.extractEmail(token);
+    String email;
+    try {
+        email = jwtUtil.extractEmail(token);
+    } catch (Exception e) {
+        return ResponseEntity.status(401).body(Map.of("error", "Invalid or expired token"));
+    }
 
     Optional<?> userOpt = userService.getUserByEmail(email);
 
     if (userOpt.isEmpty()) {
-        return ResponseEntity.status(404).body("User not found");
+        return ResponseEntity.status(404).body(Map.of("error", "User not found"));
     }
 
     com.carbon.carbontracker.model.User user =

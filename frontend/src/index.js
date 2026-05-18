@@ -3,7 +3,12 @@ import ReactDOM from 'react-dom/client';
 import axios from 'axios';
 import './index.css';
 import App from './App';
-import { attachAuthHeader, getStoredToken, shouldAttachAuthHeader } from './utils/auth';
+import { attachAuthHeader, getStoredToken, shouldAttachAuthHeader, syncAxiosAuth } from './utils/auth';
+
+const existingToken = getStoredToken();
+if (existingToken) {
+  syncAxiosAuth(existingToken);
+}
 
 axios.interceptors.request.use((config) => {
   const token = getStoredToken();

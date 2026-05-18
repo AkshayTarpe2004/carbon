@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AppLayout from "../components/AppLayout";
 import API_BASE from "../config";
-import { getStoredToken } from "../utils/auth";
+import { getStoredToken, hasValidSession, describeApiError } from "../utils/auth";
 import "./LifestyleSurvey.css";
 
 const TRANSPORT_OPTIONS = [
@@ -45,7 +45,7 @@ function LifestyleSurvey() {
   const showFuelType = form.primaryMode === "car";
 
   useEffect(() => {
-    if (!getStoredToken()) {
+    if (!hasValidSession()) {
       navigate("/login");
     }
   }, [navigate]);
@@ -101,43 +101,48 @@ function LifestyleSurvey() {
     if (!validate()) return;
     setLoading(true);
     setErrors({});
+    if (!hasValidSession()) {
+      setLoading(false);
+      navigate("/login");
+      return;
+    }
+
     try {
- await axios.post(
-  `${API_BASE}/survey`,
-  {
-    transportMode: form.primaryMode.toUpperCase(),
-    distancePerDay: parseFloat(form.dailyDistanceKm || 0),
-    fuelType: form.fuelType ? form.fuelType.toUpperCase() : null,
+      await axios.post(`${API_BASE}/survey`, {
+        transportMode: form.primaryMode.toUpperCase(),
+        distancePerDay: parseFloat(form.dailyDistanceKm || 0),
+        fuelType: form.fuelType ? form.fuelType.toUpperCase() : null,
+        dietType: form.dietType === "vegetarian" ? "VEG" : "NON_VEG",
+        mealsPerDay: parseInt(form.mealsPerDay, 10),
+        monthlyElectricity: dailyEquivalentKwh,
+        renewable: form.renewableEnergy,
+      });
 
-    dietType:
-      form.dietType === "vegetarian"
-        ? "VEG"
-        : "NON_VEG",
+      try {
+        window.dispatchEvent(new Event("carboncalc-footprint-updated"));
+      } catch {
+        /* ignore */
+      }
 
-    mealsPerDay: parseInt(form.mealsPerDay, 10),
-    monthlyElectricity: dailyEquivalentKwh,
-
-    renewable: form.renewableEnergy,
-  },
-  {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  }
-);
-
-  try {
-    window.dispatchEvent(new Event("carboncalc-footprint-updated"));
-  } catch {
-    /* ignore */
-  }
-
-  setSuccess(true);
-  setTimeout(() => navigate("/dashboard"), 2000);
-
-} catch (err) {
-  setErrors({ submit: "Something went wrong. Check your connection and try again." });
-}
+      setSuccess(true);
+      setTimeout(() => navigate("/dashboard"), 2000);
+    } catch (err) {
+      const status = err.response?.status;
+      if (status === 401) {
+        setErrors({
+          submit: "Session expired or invalid. Please log out and sign in again.",
+        });
+      } else {
+        setErrors({
+          submit: describeApiError(
+            err,
+            "Something went wrong. Check your connection and try again."
+          ),
+        });
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCancel = () => navigate("/dashboard");

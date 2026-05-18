@@ -48,8 +48,16 @@ export function isTokenExpired(token) {
 }
 
 export function hasValidSession() {
-  const token = getStoredToken();
-  return Boolean(token) && !isTokenExpired(token);
+  const token = (getStoredToken() || "").trim();
+  return Boolean(token) && token !== "null" && token !== "undefined";
+}
+
+/** Normalize login/API token before saving. */
+export function normalizeAuthToken(raw) {
+  if (raw == null) return null;
+  const token = String(raw).trim();
+  if (!token || token === "null" || token === "undefined") return null;
+  return token;
 }
 
 export function isAdminRole(role) {
@@ -66,9 +74,10 @@ export function getStoredRole() {
 }
 
 export function setStoredAuth(token, role) {
-  if (token) {
-    localStorage.setItem("token", token);
-    syncAxiosAuth(token);
+  const clean = normalizeAuthToken(token);
+  if (clean) {
+    localStorage.setItem("token", clean);
+    syncAxiosAuth(clean);
   }
   if (role != null && String(role).trim()) {
     localStorage.setItem("role", String(role).trim().toUpperCase());

@@ -5,14 +5,12 @@ import {
   getStoredRole,
   isAdminRole,
   authRedirectPath,
-  clearStoredToken,
 } from "../utils/auth";
 
 function ProtectedRoute({ children, requireAdmin = false, requireUser = false }) {
   const location = useLocation();
 
   if (!hasValidSession()) {
-    clearStoredToken();
     return <Navigate to="/login" replace state={{ from: location.pathname }} />;
   }
 

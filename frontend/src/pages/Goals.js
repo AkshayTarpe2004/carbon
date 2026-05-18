@@ -143,11 +143,7 @@ function Goals() {
 
 const fetchGoals = async () => {
   try {
-    const res = await axios.get(API_URL, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+    const res = await axios.get(API_URL);
     setGoals(res.data);
   } catch (error) {
     console.error("Error fetching goals", error);
@@ -226,17 +222,9 @@ const fetchGoals = async () => {
 
   try {
     if (editingId) {
-      await axios.put(`${API_URL}/${editingId}`, goalData, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      await axios.put(`${API_URL}/${editingId}`, goalData);
     } else {
-      await axios.post(API_URL, goalData, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      await axios.post(API_URL, goalData);
       setGoalsListPage(1);
     }
 
@@ -271,11 +259,7 @@ const fetchGoals = async () => {
 
   const handleDeleteGoal = async (id) => {
   try {
-    await axios.delete(`${API_URL}/${id}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+    await axios.delete(`${API_URL}/${id}`);
     fetchGoals();
   } catch (error) {
     console.error("Error deleting goal", error);

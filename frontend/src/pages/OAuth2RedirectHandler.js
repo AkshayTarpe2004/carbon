@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import API_BASE from "../config";
-import { setStoredAuth, authRedirectPath } from "../utils/auth";
+import { setStoredAuth, authRedirectPath, normalizeAuthToken } from "../utils/auth";
 import "./Auth.css";
 
 function OAuth2RedirectHandler() {
@@ -29,12 +29,12 @@ function OAuth2RedirectHandler() {
       return;
     }
 
-    if (token) {
-      setStoredAuth(token, null);
-      const headers = { Authorization: `Bearer ${token}` };
+    const cleanToken = normalizeAuthToken(token);
+    if (cleanToken) {
+      setStoredAuth(cleanToken, null);
       const t = setTimeout(() => {
         axios
-          .get(`${API_BASE}/auth/me`, { headers })
+          .get(`${API_BASE}/auth/me`)
           .then((res) => {
             const role = res.data?.role;
             setStoredAuth(token, role);

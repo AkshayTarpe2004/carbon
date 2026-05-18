@@ -71,14 +71,9 @@ function AppLayout({ children }) {
   }, [profileOpen]);
 
   const handleLogout = async () => {
-    const token = localStorage.getItem("token");
-    if (token && isAdmin) {
+    if (isAdmin) {
       try {
-        await axios.post(
-          `${API_BASE}/auth/logout`,
-          {},
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+        await axios.post(`${API_BASE}/auth/logout`, {});
       } catch {
         /* still sign out locally */
       }

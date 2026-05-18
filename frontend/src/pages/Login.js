@@ -9,6 +9,7 @@ import {
   clearStoredToken,
   authRedirectPath,
   describeApiError,
+  normalizeAuthToken,
 } from "../utils/auth";
 import "./Auth.css";
 
@@ -102,8 +103,17 @@ function Login() {
         { email: trimmedEmail, password },
         { maxRedirects: 0 }
       );
-      const token = response.data.token;
-      const role = response.data.role;
+      const token = normalizeAuthToken(
+        response.data?.token || response.data?.accessToken
+      );
+      const role = response.data?.role;
+      if (!token) {
+        setNotification({
+          type: "error",
+          message: "Login response did not include a session token. Redeploy the backend and try again.",
+        });
+        return;
+      }
       const admin = isAdminRole(role);
 
       setStoredAuth(token, role);
@@ -111,9 +121,7 @@ function Login() {
       // Extra guard: during maintenance, block non-admin even after successful auth.
       if (!admin) {
         try {
-          const settingsRes = await axios.get(`${API_BASE}/admin/settings`, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
+          const settingsRes = await axios.get(`${API_BASE}/admin/settings`);
           const maintenanceMode = Boolean(settingsRes?.data?.maintenanceMode);
           if (maintenanceMode) {
             clearStoredToken();

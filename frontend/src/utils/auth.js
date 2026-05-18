@@ -84,8 +84,13 @@ export function shouldAttachAuthHeader(url) {
   return !publicAuthPaths.some((p) => path.includes(p));
 }
 
+export function authHeaders() {
+  const token = getStoredToken();
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
+
 export function authRedirectPath(role) {
-  return isAdminRole(role) ? "/AdminDashboard" : "/dashboard";
+  return isAdminRole(role) ? "/admin" : "/dashboard";
 }
 
 export function describeApiError(err, fallback = "Something went wrong. Please try again.") {

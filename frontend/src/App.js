@@ -48,11 +48,11 @@ function App() {
         <Route path="/badges" element={<ProtectedRoute requireUser><Badges /></ProtectedRoute>} />
         <Route path="/leaderboard" element={<ProtectedRoute requireUser><Leaderboard /></ProtectedRoute>} />
         <Route path="/admin" element={<ProtectedRoute requireAdmin><ErrorBoundary><AdminDashboard /></ErrorBoundary></ProtectedRoute>} />
-        <Route path="/admindashboard" element={<Navigate to="/AdminDashboard" replace />} />
+        <Route path="/AdminDashboard" element={<Navigate to="/admin" replace />} />
+        <Route path="/admindashboard" element={<Navigate to="/admin" replace />} />
         <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
         <Route path="/goals" element={<ProtectedRoute requireUser><Goals /></ProtectedRoute>} />
         <Route path="/Goals" element={<ProtectedRoute requireUser><Goals /></ProtectedRoute>} />
-        <Route path="/AdminDashboard" element={<ProtectedRoute requireAdmin><ErrorBoundary><AdminDashboard /></ErrorBoundary></ProtectedRoute>} />
         <Route path="/marketplace" element={<ProtectedRoute requireUser><Marketplace /></ProtectedRoute>} />
         <Route path="/transactions" element={<ProtectedRoute requireUser><Transactions /></ProtectedRoute>} />
         <Route path="/notifications" element={<ProtectedRoute requireUser><Notifications /></ProtectedRoute>} />

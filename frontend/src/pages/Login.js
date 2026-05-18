@@ -108,6 +108,18 @@ function Login() {
 
       setStoredAuth(token, role);
 
+      try {
+        await axios.get(`${API_BASE}/auth/me`);
+      } catch {
+        clearStoredToken();
+        setNotification({
+          type: "error",
+          message:
+            "Login succeeded but the session could not be verified. Clear browser data, confirm the frontend API URL matches your Render backend, then try again.",
+        });
+        return;
+      }
+
       // Extra guard: during maintenance, block non-admin even after successful auth.
       if (!admin) {
         try {

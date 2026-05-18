@@ -150,7 +150,7 @@ function AppLayout({ children }) {
           {isAdmin && (
             <>
               <NavLink
-                to="/AdminDashboard?tab=analytics"
+                to="/admin?tab=analytics"
                 className={() => `app-nav-item ${currentAdminTab === "analytics" ? "active" : ""}`}
                 end
               >
@@ -159,7 +159,7 @@ function AppLayout({ children }) {
               </NavLink>
 
               <NavLink
-                to="/AdminDashboard?tab=users"
+                to="/admin?tab=users"
                 className={() => `app-nav-item ${currentAdminTab === "users" ? "active" : ""}`}
               >
                 <span className="app-nav-icon">👥</span>
@@ -167,7 +167,7 @@ function AppLayout({ children }) {
               </NavLink>
 
               <NavLink
-                to="/AdminDashboard?tab=goals"
+                to="/admin?tab=goals"
                 className={() => `app-nav-item ${currentAdminTab === "goals" ? "active" : ""}`}
               >
                 <span className="app-nav-icon">🎯</span>
@@ -175,7 +175,7 @@ function AppLayout({ children }) {
               </NavLink>
 
               <NavLink
-                to="/AdminDashboard?tab=badges"
+                to="/admin?tab=badges"
                 className={() => `app-nav-item ${currentAdminTab === "badges" ? "active" : ""}`}
               >
                 <span className="app-nav-icon">🏅</span>
@@ -183,7 +183,7 @@ function AppLayout({ children }) {
               </NavLink>
 
               <NavLink
-                to="/AdminDashboard?tab=leaderboard"
+                to="/admin?tab=leaderboard"
                 className={() => `app-nav-item ${currentAdminTab === "leaderboard" ? "active" : ""}`}
               >
                 <span className="app-nav-icon">🏆</span>
@@ -191,7 +191,7 @@ function AppLayout({ children }) {
               </NavLink>
 
               <NavLink
-                to="/AdminDashboard?tab=marketplace"
+                to="/admin?tab=marketplace"
                 className={() => `app-nav-item ${currentAdminTab === "marketplace" ? "active" : ""}`}
               >
                 <span className="app-nav-icon">🛒</span>
@@ -199,7 +199,7 @@ function AppLayout({ children }) {
               </NavLink>
 
               <NavLink
-                to="/AdminDashboard?tab=transactions"
+                to="/admin?tab=transactions"
                 className={() => `app-nav-item ${currentAdminTab === "transactions" ? "active" : ""}`}
               >
                 <span className="app-nav-icon">💳</span>
@@ -207,7 +207,7 @@ function AppLayout({ children }) {
               </NavLink>
 
               <NavLink
-                to="/AdminDashboard?tab=notifications"
+                to="/admin?tab=notifications"
                 className={() => `app-nav-item ${currentAdminTab === "notifications" ? "active" : ""}`}
               >
                 <span className="app-nav-icon">🔔</span>
@@ -215,7 +215,7 @@ function AppLayout({ children }) {
               </NavLink>
 
               <NavLink
-                to="/AdminDashboard?tab=contact-inbox"
+                to="/admin?tab=contact-inbox"
                 className={() => `app-nav-item ${currentAdminTab === "contact-inbox" ? "active" : ""}`}
               >
                 <span className="app-nav-icon">✉️</span>
@@ -223,7 +223,7 @@ function AppLayout({ children }) {
               </NavLink>
 
               <NavLink
-                to="/AdminDashboard?tab=admin-logs"
+                to="/admin?tab=admin-logs"
                 className={() => `app-nav-item ${currentAdminTab === "admin-logs" ? "active" : ""}`}
               >
                 <span className="app-nav-icon">🧾</span>
@@ -231,7 +231,7 @@ function AppLayout({ children }) {
               </NavLink>
 
               <NavLink
-                to="/AdminDashboard?tab=settings"
+                to="/admin?tab=settings"
                 className={() => `app-nav-item ${currentAdminTab === "settings" ? "active" : ""}`}
               >
                 <span className="app-nav-icon">⚙</span>

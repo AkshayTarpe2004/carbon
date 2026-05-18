@@ -7,18 +7,12 @@ import { attachAuthHeader, getStoredToken, shouldAttachAuthHeader } from './util
 
 axios.interceptors.request.use((config) => {
   const token = getStoredToken();
-  const url = `${config.baseURL || ''}${config.url || ''}`;
-  if (!token || !shouldAttachAuthHeader(url)) {
-    return config;
-  }
-  const existing =
-    config.headers?.Authorization ||
-    config.headers?.authorization ||
-    (typeof config.headers?.get === 'function' ? config.headers.get('Authorization') : null);
-  if (!existing) {
-    attachAuthHeader(config, token);
-  }
-  return config;
+  if (!token) return config;
+
+  const url = `${config.baseURL || ""}${config.url || ""}`;
+  if (!shouldAttachAuthHeader(url)) return config;
+
+  return attachAuthHeader(config, token);
 });
 //import reportWebVitals from './reportWebVitals';
 

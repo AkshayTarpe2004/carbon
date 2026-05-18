@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import AppLayout from "../components/AppLayout";
 import API_BASE, { API_ORIGIN } from "../config";
-import { isAdminRole } from "../utils/auth";
+import { isAdminRole, getStoredToken, getStoredRole, emailFromToken, displayNameFromEmail } from "../utils/auth";
 import "./AdminDashboard.css";
 import "./Notifications.css";
 
@@ -773,26 +773,14 @@ function AdminDashboard() {
   }, [adminLeaderboard.length, adminWeeklyLeaderboard.length, adminLeaderboardFilter]);
 
   useEffect(() => {
-    const id = axios.interceptors.request.use(async (config) => {
-      let ip = readCachedPublicIp();
-      if (!ip) {
-        try {
-          const r = await fetch("https://api.ipify.org?format=json");
-          const d = await r.json();
-          if (d && d.ip) {
-            try {
-              sessionStorage.setItem("clientPublicIp", d.ip);
-            } catch {
-              /* ignore */
-            }
-            ip = d.ip;
-          }
-        } catch {
-          /* ignore — backend still has socket IP */
-        }
-      }
-      if (ip) {
-        return { ...config, headers: { ...config.headers, "X-Public-IP": ip } };
+    const id = axios.interceptors.request.use((config) => {
+      const ip = readCachedPublicIp();
+      if (!ip) return config;
+      if (typeof config.headers?.set === "function") {
+        config.headers.set("X-Public-IP", ip);
+      } else {
+        config.headers = config.headers || {};
+        config.headers["X-Public-IP"] = ip;
       }
       return config;
     });
@@ -930,44 +918,31 @@ function AdminDashboard() {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) { navigate("/login"); return; }
+    const token = getStoredToken();
+    if (!token) {
+      setLoading(false);
+      navigate("/login");
+      return;
+    }
 
     setLoadError("");
-    const headers = { Authorization: `Bearer ${token}` };
+    const storedRole = getStoredRole();
 
-    axios
-      .get(`${API_BASE}/auth/me`, { headers })
-      .then((res) => {
-        setUser(res.data);
-
-        // Fetch data needed for admin views in parallel
-        Promise.allSettled([
-          // Leaderboard for admin view
-          axios.get(`${API_BASE}/leaderboard`, { headers }),
-          // Weekly leaderboard snapshot for admin view
-          axios.get(`${API_BASE}/leaderboard/weekly`, { headers }),
-          // Badge stats for admin analytics (global counts)
-          axios.get(`${API_BASE}/badges/admin/stats`, { headers }),
-          // Carbon logs for all non-admin users (admin analytics)
-          axios.get(`${API_BASE}/carbon/logs/admin/all`, { headers }),
-          // Goals for all non-admin users (admin dashboard)
-          axios.get(`${API_BASE}/goals/admin`, { headers }),
-          // All users – used to search & select a user instead of manual ID
-          axios.get(`${API_BASE}/users`, { headers }),
-          // Badge templates – used for editing / enabling / disabling badges
-          axios.get(`${API_BASE}/badge-templates`, { headers }),
-          // Marketplace catalog for admin
-          axios.get(`${API_BASE}/marketplace/admin/all`, { headers }),
-          // Marketplace transactions for admin
-          axios.get(`${API_BASE}/transactions/admin/all`, { headers }),
-          // All notifications for admin monitoring
-          axios.get(`${API_BASE}/notifications/admin/all`, { headers }),
-          // Public site contact form submissions (admin only)
-          axios.get(`${API_BASE}/contact/messages/admin`, { headers }),
-          // Admin settings
-          axios.get(`${API_BASE}/admin/settings`, { headers }),
-        ]).then((results) => {
+    const loadAdminData = () =>
+      Promise.allSettled([
+        axios.get(`${API_BASE}/leaderboard`),
+        axios.get(`${API_BASE}/leaderboard/weekly`),
+        axios.get(`${API_BASE}/badges/admin/stats`),
+        axios.get(`${API_BASE}/carbon/logs/admin/all`),
+        axios.get(`${API_BASE}/goals/admin`),
+        axios.get(`${API_BASE}/users`),
+        axios.get(`${API_BASE}/badge-templates`),
+        axios.get(`${API_BASE}/marketplace/admin/all`),
+        axios.get(`${API_BASE}/transactions/admin/all`),
+        axios.get(`${API_BASE}/notifications/admin/all`),
+        axios.get(`${API_BASE}/contact/messages/admin`),
+        axios.get(`${API_BASE}/admin/settings`),
+      ]).then((results) => {
           const [
             lbResult,
             lbWeeklyResult,
@@ -1142,8 +1117,30 @@ function AdminDashboard() {
         }).finally(() => {
           setLoading(false);
         });
+
+    const applyAdminFromStoredRole = () => {
+      const email = emailFromToken(token);
+      setUser({
+        name: email ? displayNameFromEmail(email) : "Admin",
+        email: email || "",
+        role: storedRole || "ADMIN",
+      });
+    };
+
+    axios
+      .get(`${API_BASE}/auth/me`)
+      .then((res) => {
+        setUser(res.data);
+        if (res.data?.role) {
+          localStorage.setItem("role", String(res.data.role).trim().toUpperCase());
+        }
+        return loadAdminData();
       })
       .catch((err) => {
+        if (isAdminRole(storedRole)) {
+          applyAdminFromStoredRole();
+          return loadAdminData();
+        }
         const detail =
           typeof err?.response?.data === "string"
             ? err.response.data
@@ -1239,7 +1236,7 @@ function AdminDashboard() {
     );
   }
 
-  if (!user || !isAdminRole(user.role)) {
+  if (!user || !isAdminRole(user.role || getStoredRole())) {
     return (
       <AppLayout>
         <div className="admin-denied">
